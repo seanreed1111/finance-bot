@@ -2,7 +2,7 @@ from typing import Any, Optional
 from langchain.embeddings import OpenAIEmbeddings
 from chromadb.api.types import Documents, Embeddings
 from embedchain.config.apps.BaseAppConfig import BaseAppConfig
-from embedchain.models import (VectorDimensions)
+from embedchain.models import (Providers, VectorDimensions)
 from dotenv import load_dotenv
 load_dotenv("deployment.env")
 
@@ -16,6 +16,7 @@ class MyAzureOpenAIAppConfig(BaseAppConfig):
         embedding_chunk_size=16,
         log_level='DEBUG',
         embedding_fn=None,
+        provider=Providers.AZURE_OPENAI,
         db=None,
         host=None,
         port=None,
@@ -42,6 +43,8 @@ class MyAzureOpenAIAppConfig(BaseAppConfig):
         :param db_type: Optional. type of Vector database to use.
         :param es_config: Optional. elasticsearch database config to be used for connection
         """
+        if provider:
+            self.provider=provider
 
         super().__init__(
             log_level=log_level,
