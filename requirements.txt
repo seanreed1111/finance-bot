@@ -1,6 +1,5 @@
 # pip freeze -r requirements.txt | sed '/freeze/,$ d'
 langchain
-PyPDF2
 python-dotenv==1.0.0
 openai==0.27.6
 altair<5
@@ -8,5 +7,5 @@ tiktoken>=0.4.0
 loguru
 pypdf
 embedchain==0.0.47
-gradio==3.41.2
+gradio>3.0.0
 

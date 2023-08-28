@@ -4,7 +4,7 @@ from typing import List, Optional
 from langchain.schema import BaseMessage
 
 from embedchain.config import ChatConfig, CustomAppConfig
-from embedchain.embedchain import EmbedChain
+from embedchain0047 import EmbedChain
 from embedchain.models import Providers
 
 

@@ -1,6 +1,6 @@
 import os, sys, json
 from typing import Optional
-from embedchain.apps.CustomApp import CustomApp
+from CustomApp0047 import CustomApp
 from embedchain.config import(AddConfig,ChatConfig, ChunkerConfig)
 from loguru import logger
 from embedchain.models import Providers, EmbeddingFunctions
