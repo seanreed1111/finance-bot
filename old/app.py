@@ -12,43 +12,25 @@ load_dotenv("deployment.env")
 import gradio as gr
 
 @logger.catch
-def get_azure_openai_app_config():
+def get_azure_openai_app_config(log_level="DEBUG"):
   return MyAzureOpenAIAppConfig(
       embedding_fn=EmbeddingFunctions.OPENAI,
-      log_level="DEBUG",
+      log_level=log_level,
       deployment_name=os.getenv("EMBEDDING_DEPLOYMENT_NAME"),
       provider=Providers.AZURE_OPENAI
   )
 
-
-@logger.catch
-def void_load_documents(bot):
-    chunker_config = AddConfig(chunker=ChunkerConfig(chunk_size=300, chunk_overlap=30)) #for TEXT
-    bot.add("https://en.wikipedia.org/wiki/A._W._Peet", config=chunker_config)
-    bot.add("https://www.trinity.utoronto.ca/directory/peet-a-w/", config=chunker_config)
-    bot.add("https://www.youtube.com/watch?v=gBYcM9fe8YA","youtube_video")
-
-
-
 @logger.catch
 def void_load_documents(bot):
     chunker_config = AddConfig(chunker=ChunkerConfig(chunk_size=1100, chunk_overlap=150))
-    bot.add("https://en.wikipedia.org/wiki/A._W._Peet", config=chunker_config)
-    bot.add("https://www.trinity.utoronto.ca/directory/peet-a-w/", config=chunker_config)
-    bot.add("https://www.youtube.com/watch?v=gBYcM9fe8YA","youtube_video")
-#    bot.add("https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32022R2554", config=chunker_config)
-
-
-
-
+    bot.add("https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32022R2554", config=chunker_config)
 
 @logger.catch
-def main():
+def main(log_level="DEBUG"):
     TEMPERATURE = 0
     MAX_TOKENS = 3000
     NUMBER_DOCUMENTS = 3 #how many documents to retrieve from the database
-
-    bot = CustomApp(get_azure_openai_app_config())
+    bot = CustomApp(get_azure_openai_app_config(log_level=log_level))
     void_load_documents(bot)
     chat_config = ChatConfig(
         number_documents=NUMBER_DOCUMENTS,# default is set to 1 by parent class QueryConfig
@@ -63,8 +45,6 @@ def main():
     @logger.catch
     def bot_response(message, history):
         answer = bot.chat(message,config=chat_config)
-       # print(message, "\n", bot.memory.chat_memory)
-       # print(type(message), "\n", type(bot.memory.chat_memory))
         history.append((message, answer))
         return "", history
 
@@ -82,4 +62,6 @@ def main():
     demo.launch(server_port=8501, share=True, debug=True)
 
 if __name__ == '__main__':
-    logger.add(sys.stderr, colorize=True, format="<green>{time}</green> <level>{message}</level>", level="WARNING")
+    log_level = "WARNING"
+    logger.add(sys.stderr, colorize=True, format="<green>{time}</green> <level>{message}</level>", level=log_level)
+    main(log_level=log_level)
