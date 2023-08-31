@@ -57,7 +57,6 @@ def main(log_level="DEBUG"):
         btn.click(bot_response, inputs=[msg, chatbot], outputs=[msg, chatbot])
         msg.submit(bot_response, inputs=[msg, chatbot], outputs=[msg, chatbot])
     gr.close_all()
-#    demo = gr.ChatInterface(bot_response, title="DORABot")
 
     demo.launch(server_port=8501, share=True, debug=True)
 
