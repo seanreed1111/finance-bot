@@ -1,3 +1,4 @@
+
 from typing import Any, Optional
 from langchain.embeddings import OpenAIEmbeddings
 from chromadb.api.types import Documents, Embeddings
@@ -16,7 +17,6 @@ class MyAzureOpenAIAppConfig(BaseAppConfig):
         embedding_chunk_size=16,
         log_level='DEBUG',
         embedding_fn=None,
-        provider=Providers.AZURE_OPENAI,
         db=None,
         host=None,
         port=None,
@@ -25,7 +25,8 @@ class MyAzureOpenAIAppConfig(BaseAppConfig):
         deployment_name=None,
         collect_metrics= None,
         db_type= None,
-        es_config=None,
+        provider=Providers.AZURE_OPENAI,
+        es_config=None
     ):
         """
         :param embedding_chunk_size: Optional. (Int) accounts for Azure OPENAI throttling
