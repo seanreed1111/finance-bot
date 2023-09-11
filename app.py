@@ -47,9 +47,6 @@ def get_custom_prompt_template():
 def void_load_documents(bot):
     chunker_config = AddConfig(chunker=ChunkerConfig(chunk_size=1100, chunk_overlap=150))
     bot.add("./DATA/dora.pdf", config=chunker_config, data_type="pdf_file")
-#    bot.add("https://en.wikipedia.org/wiki/A._W._Peet", config=chunker_config)
-#    bot.add("https://www.trinity.utoronto.ca/directory/peet-a-w/", config=chunker_config)
-    #bot.add("https://www.youtube.com/watch?v=gBYcM9fe8YA","youtube_video")
 #    bot.add("https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32022R2554", config=chunker_config)
 
 @logger.catch
